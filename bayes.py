@@ -39,19 +39,32 @@ class Node:
             t_p = 0
             keys = self.probabilities.keys()
             for key in keys:
+                print("SubFunction")
                 acum = self.probabilities[key]
-                print(acum)
+                print('Acum:'+str(acum))
                 for p_len in range(0, len(key), 2):
                     aux_node = nodes[key[1+p_len]]
                     if len(aux_node.parents) == 0:
-                        print("AN 1:" + str(aux_node.probability))
-                        acum = float(decimal.Decimal(str(aux_node.probability))
-                                     * decimal.Decimal(str(acum)))
+                        print('Key:'+str(key)+" AN 1:" + str(aux_node.probability))
+                        if key[p_len] == '+':
+                            acum = float(decimal.Decimal(str(aux_node.probability)) *
+                                         decimal.Decimal(str(acum)))
+                        else:
+                            acum = float(
+                                (decimal.Decimal(1) -
+                                decimal.Decimal(str(aux_node.probability))) *
+                                decimal.Decimal(str(acum)))
                         print("T:"+str(acum))
                     else:
-                        print("AN 2:" + str(aux_node.probabilities[key[:p_len]]))
-                        acum = float(decimal.Decimal(str(aux_node.probabilities[key[:-p_len]]))
-                                     * decimal.Decimal(str(acum)))
+                        print('Key:'+str(key)+" AN 2:" + str(aux_node.probabilities[key[:p_len]]))
+                        if key[p_len] == '+':
+                            acum = float(decimal.Decimal(str(aux_node.probabilities[key[:p_len]])) *
+                                         decimal.Decimal(str(acum)))
+                        else:
+                            acum = float(
+                                (decimal.Decimal(1) -
+                                decimal.Decimal(str(aux_node.probabilities[key[:p_len]]))) *
+                                decimal.Decimal(str(acum)))
                         print("T:"+str(acum))
                 t_p += acum
             self.probability = t_p
@@ -89,7 +102,9 @@ if __name__ == '__main__':
     print(lines[3+idx:])
 
     for line in lines[4+idx:]:
+        # if line.find('|') == -1:
         continue
+
 
     for n in nodes:
         print(n + ' ' + nodes[n].name + '\n' + str(nodes[n].probability)

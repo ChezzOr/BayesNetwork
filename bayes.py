@@ -59,7 +59,10 @@ class Node:
                                 decimal.Decimal(str(acum)))
                         # print("T:"+str(acum))
                     else:
-                        # print('Key:'+str(key)+" AN 2:" + str(aux_node.probabilities[key[:p_len]]))
+                        print('Key:'+str(key))
+                        print('p_len:' + str(p_len))
+                        print('probs:' + str(aux_node.probabilities))
+                        print(" AN 2:" + str(aux_node.probabilities[key[:p_len]]))
                         if key[p_len] == '+':
                             acum = float(decimal.Decimal(str(aux_node.probabilities[key[:p_len]])) *
                                          decimal.Decimal(str(acum)))
@@ -164,7 +167,7 @@ if __name__ == '__main__':
                 evidence_nodes = [evidence_node[:2] for evidence_node in evidence_nodes]
                 # print('Query:'+str(query))
                 # print('Evidence:' + str(evidence_nodes))
-                has_parents = [evidence[:2]
+                has_parents = [evidence
                                for single_q in query
                                for evidence in evidence_nodes
                                if evidence[1:2] in nodes[single_q[1:2]].parents]
@@ -182,12 +185,17 @@ if __name__ == '__main__':
                     evidence_nodes = aux
                     print('Query:' + str(query))
                     print('Evidence:' + str(evidence_nodes))
-                    has_parents = [evidence
+                    has_parents = [parent
                                    for single_q in query
                                    for evidence in evidence_nodes
-                                   for parent in nodes[single_q[1:2]].parents
-                                   if evidence[1:2] in parent]
+                                   for parent in nodes[single_q[1:2]].parents]
+                    aux_h = []
+                    [aux_h.append('+'+parent) for parent in has_parents if parent not in aux_h]
+                    [aux_h.append('-'+parent) for parent in has_parents if parent not in aux_h]
 
+                    has_parents = aux_h
+                    print('Parents:'+str(has_parents))
+                    print('Query'+str(query))
                     bot = [nodes[single_q[1]].total_probability(True if single_q[0] == '-' else False, nodes)
                            for single_q in query]
                     bot = eval(str(bot).replace(',', '*'))

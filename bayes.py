@@ -126,6 +126,8 @@ if __name__ == '__main__':
     nodes = {}
     queries = []
 
+    print(sys.version)
+
     for line in fileinput.input():
         if line[0] != '#':
             line = line.strip('\n')

@@ -19,13 +19,13 @@ class Node:
     def set_parents(self, parents):
         parents = parents.split(',')
         [self.parents.append(parent[1]) for parent in parents if parent[1] not in self.parents]
-        self.parents = sorted(self.parents)
+        #self.parents = sorted(self.parents)
 
     def set_probabilities(self, probabilities):
         self.set_parents(probabilities)
         p_value = float(probabilities.split('=')[1])
         probabilities = probabilities.split(',')
-        probabilities = sorted(probabilities, key=lambda x: x[1] )
+        #probabilities = sorted(probabilities, key=lambda x: x[1] )
         dict_k = ''
         for prob in probabilities:
             dict_k += prob[:2]

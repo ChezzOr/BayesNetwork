@@ -142,7 +142,7 @@ if __name__ == '__main__':
     for idx, line in enumerate(lines[3:]):
         if line != '[Queries]':
             if line.find('|') == -1:
-                nodes[line[1]].set_probability(float(line.split('=')[1]))
+                nodes[line[1]].set_probability(float((line.split('='))[1]))
             else:
                 prob_l = line.split('|')
                 nodes[prob_l[0][1]].set_probabilities(prob_l[1])
